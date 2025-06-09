@@ -1,0 +1,561 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: #d4af37;
+    margin-top: 60px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+
+/* Navbar Styling */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(18, 18, 18, 0.2);
+    padding: 10px 0;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
+
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+}
+
+/* Navbar Links */
+.navbar-nav .nav-link {
+    color: gold;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #b8860b;
+}
+
+/* Navbar Toggle Button (Gradient Border) */
+.navbar-toggler {
+    border: 2px solid transparent;
+    border-radius: 5px;
+    background-image: linear-gradient(45deg, #b8860b, #1a1a1a);
+    padding: 5px;
+    transition: border-color 0.3s;
+}
+
+.custom-toggler {
+    border: none;
+    background: transparent;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    z-index: 999;
+}
+
+.custom-toggler .toggler-icon {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+    border-radius: 1px;
+}
+
+.custom-toggler.open .top-bar {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.custom-toggler.open .middle-bar {
+    opacity: 0;
+}
+
+.custom-toggler.open .bottom-bar {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+#menu-icon {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.fa-bars {
+    transform: rotate(0deg);
+    opacity: 1;
+}
+
+.fa-times {
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
+.btn-custom {
+    background-color: #d4af37;
+    color: black;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: white;
+    color: #d4af37;
+}
+
+/* Logo Styling */
+.navbar-brand img {
+    border-radius: 50%;
+}
+
+/* Navbar Gradient Border */
+.border-gradient {
+    border: 2px solid;
+    border-image: linear-gradient(45deg, gold, darkgoldenrod) 1;
+}
+
+/* Brand Name Styling */
+.brand-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Sticky Navbar */
+.navbar.fixed-top {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(rgba(18, 18, 18, 0.4), rgba(18, 18, 18, 0.4)),
+        url('../images/background.jpg') no-repeat center/cover;
+    animation: slide-in 1s ease-out;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(18, 18, 18, 0.5);
+    z-index: 0;
+}
+
+.hero div {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fade-in Animation */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Slide-in Animation */
+@keyframes slide-in {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Apply fade-in animation to elements */
+.fade-in {
+    animation: fade-in 1.5s ease-in;
+}
+
+/* Introduction Section */
+.introduction {
+    background-color: #121212;
+    padding: 50px 0;
+    text-align: center;
+    animation: fade-in 1.5s ease;
+}
+
+.introduction .container {
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Heading Style */
+.introduction h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+/* Stylish Divider */
+.divider {
+    width: 150px;
+    height: 3px;
+    background-color: gold;
+    margin: 20px auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px gold;
+}
+
+/* Paragraph Style */
+.introduction p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: left;
+    color: white;
+}
+
+/* Icon Styling */
+.introduction i {
+    color: gold;
+    margin-right: 8px;
+}
+
+/* Animation */
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Overview Section Styling */
+.overview-section {
+    padding: 60px 0;
+    background-color: #1a1a1a;
+    color: gold;
+}
+
+.overview-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.overview-section h3,
+p {
+    color: white;
+}
+
+/* Business Card Styling */
+.business-card {
+    background-color: #121212;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid gold;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.business-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px gold;
+}
+
+.business-card img {
+    width: 100%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Learn More Button Styling */
+.learn-more-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    color: gold;
+    border: 2px solid gold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.learn-more-btn:hover {
+    background-color: gold;
+    color: black;
+}
+
+/* Section Background */
+#community {
+    background-color: #1a1a1a;
+}
+
+/* Gradient Heading */
+.gradient-heading {
+    background: linear-gradient(45deg, gold, darkgoldenrod);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Card Styling */
+.card {
+    background-color: #2a2a2a;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Glowing Effect */
+.glow-effect {
+    transition: box-shadow 0.3s;
+}
+
+.glow-effect:hover {
+    box-shadow: 0 0 15px gold;
+}
+
+/* Button Styling */
+.btn-gradient {
+    background: linear-gradient(45deg, gold, darkgoldenrod);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: box-shadow 0.3s;
+}
+
+.btn-gradient:hover {
+    box-shadow: 0 0 10px gold;
+}
+
+/* Contact Us Section */
+#contact {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #d4af37, #ad8c2f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5rem;
+}
+
+.btn-outline-gold {
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-gold:hover {
+    background-color: #d4af37;
+    color: #1a1a1a;
+}
+
+.text-gold {
+    color: #FFD700 !important;
+    /* Bright gold shade */
+}
+
+.social-icons a {
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #ad8c2f;
+}
+
+/* Overview Page Styling */
+
+.overview-hero {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(rgba(18, 18, 18, 0.4), rgba(18, 18, 18, 0.4)),
+        url('../images/EasyWorld_tower.webp') no-repeat center/cover;
+    animation: slide-in 1s ease-out;
+    margin: 0px;
+}
+
+.overview-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(18, 18, 18, 0.5);
+    z-index: 0;
+}
+
+.overview-hero div {
+    position: relative;
+    z-index: 1;
+}
+
+.overview-section {
+    padding: 100px 0;
+    color: white;
+    position: relative;
+}
+
+.content-box {
+    background-color: rgba(10, 10, 10, 0.5);
+    padding: 50px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.overview-section h1 {
+    font-size: 2.5em;
+
+}
+
+.overview-section h2 {
+    margin-top: 30px;
+    background: linear-gradient(90deg, #FFD700, #8B8000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.overview-section p,
+.overview-section ul {
+    line-height: 1.6;
+}
+
+.overview-section ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+/* Hide carousel control buttons */
+#valuesCarousel .carousel-control-prev,
+#valuesCarousel .carousel-control-next {
+    display: none;
+}
+
+/* Ensure images fit well on desktop */
+#valuesCarousel .carousel-item img {
+    width: 100%;
+    height: 700px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Center the carousel */
+#valuesCarousel {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.carousel-item {
+    text-align: center;
+}
+
+/* ventures styling */
+.ventures-hero {
+    background-image: url('../images/ventures-image.png');
+    background-size: cover;
+    background-position: center center;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.ventures-hero h1,
+.ventures-hero p {
+    z-index: 2;
+}
+
+.section-divider {
+    width: 80px;
+    height: 4px;
+    background-color: #f9c40d;
+    margin: 0 auto 30px auto;
+    border-radius: 2px;
+}
+
+footer {
+    background-color: #1a1a1a;
+    padding: 20px;
+    text-align: center;
+}
+
+footer p {
+    color: #d4af37;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    .hero h1 {
+        font-size: 1.8rem;
+        padding: 0 10px;
+    }
+
+    .introduction p {
+        font-size: 1rem;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        /* Adjust this as needed */
+    }
+
+    .content-section {
+        padding: 10px;
+        text-align: center;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .introduction,
+    .overview-section,
+    #contact {
+        padding: 30px 0;
+    }
+
+    .ventures-hero h1 {
+        font-size: 1.8rem;
+        padding: 0 10px;
+    }
+
+    .ventures-hero p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+}
