@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyWorld Co. Op</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+</head>
+<body class="bg-dark text-light">
+  
+   <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EasyWorld Co. Op Logo" width="40" height="40" class="me-2">
+                <span class="brand-name gradient-heading">EasyWorld Co. Op</span>
+            </a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navToggler">
+            <span class="toggler-icon top-bar"></span>
+            <span class="toggler-icon middle-bar"></span>
+            <span class="toggler-icon bottom-bar"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('overview') }}"><i class="fas fa-info-circle me-1"></i> Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('ventures') }}"><i class="fas fa-cogs me-1"></i> Ventures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}#community"><i class="fas fa-users me-1"></i> Community & Collaboration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact"><i class="fas fa-envelope me-1"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('blog') }}"><i class="fas fa-blog me-1"></i> Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div>
+        <h1 class="fade-in">Welcome to EasyWorld Co. Op</h1>
+        <p class="lead mt-3 fade-in">Where Ideas Meet Opportunity</p>
+        <a href="#introduction" class="btn btn-warning mt-4 fade-in">Learn More</a>
+    </div>
+</section>
+
+<!-- Introduction Section -->
+<section class="introduction" id="introduction">
+    <div class="container">
+        <h2 class="gradient-text">About EasyWorld Co. Op</h2>
+        
+        <!-- Stylish Divider -->
+        <div class="divider"></div>
+        
+<p>
+    <i class="fas fa-lightbulb"></i> EasyWorld Co. Op is a visionary, community-centered cooperative committed to bridging innovation with opportunity. We empower producers, streamline operations through technology, and build lasting value through unity, creativity, and shared growth.
+</p>
+        
+<p>
+    <i class="fas fa-bullseye"></i> Our mission is to cultivate a dynamic ecosystem where ideas connect with real opportunities—empowering individuals with both technical and soft skills to thrive and make a difference.
+</p>
+    </div>
+</section>
+
+<!-- Overview Section -->
+<section id="overview" class="overview-section">
+    <div class="container text-center">
+      <h1 class="gradient-text">Our Ventures</h1>
+        <h2 class="gradient-heading">Coming Soon</h2>
+        <div class="row mt-4">
+            <!-- Cassava Starch Factory -->
+            <div class="col-md-6 mb-4">
+                <div class="business-card">
+                    <h3>Cassava Starch Factory</h3>
+                    <p>
+                        Aiming to produce high-quality starch from cassava to serve both local and international markets.
+                    </p>
+                    <img src="{{ url_for('static', filename='images/cassava_starch_factory.png') }}" alt="cassava_starch_factory-image">
+                      <a href="{{ url_for('overview') }}#cassava_starch_factory" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+            <!-- Goat Farming -->
+            <div class="col-md-6 mb-4">
+                <div class="business-card">
+                    <h3>Goat Farming</h3>
+                    <p>
+                        Establishing a goat farming business focused on quality milk production with sustainable farming practices.
+                    </p>
+                    <img src="{{ url_for('static', filename='images/diary_goat_farming.png') }}" alt="goat_farming-image">
+                    <a href="{{ url_for('overview') }}l#diary_goat_farming" class="learn-more-btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Community & Collaboration Section -->
+<section id="community" class="py-5 text-center text-light">
+    <div class="container">
+      <h2 class="gradient-heading mb-4">Community & Collaboration</h2>
+        <p class="mb-5">We are building a united network of skilled individuals—producers, creators, and professionals—under the EasyWorld Co. Op brand. Together, we drive modernization, enhance visibility through branding, and share resources to elevate every member.</p>
+        
+        <div class="row g-4">
+            <!-- Collaboration Model Card -->
+            <div class="col-md-6">
+                <div class="card border-gradient glow-effect h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">How Collaboration Works</h5>
+                        <p class="card-text">EasyWorld provides tools, branding, and digital platforms to help individuals modernize and scale their operations. Our collaborative model ensures that everyone grows together through a fair and transparent profit-sharing system.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Vision Card -->
+            <div class="col-md-6">
+                <div class="card border-gradient glow-effect h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Future Vision</h5>
+                        <p class="card-text">Our long-term vision includes becoming a fully self-reliant network—supplying local producers, owning ingredient farms, and establishing factories to fuel prosperity for future generations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Us Button -->
+        <div class="mt-5">
+            <a href="#contact" class="btn btn-gradient glow-effect">Join Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Us Section -->
+<section id="contact" class="py-5">
+    <div class="container text-center">
+        <h2 class="gradient-text">Contact Us</h2>
+        <p>We'd love to hear from you. Reach out to us through any of the methods below.</p>
+        
+        <div class="row mt-4">
+            <!-- Contact Form -->
+            <div class="col-md-6 mb-4">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                            {% for message in messages %}
+                               <p class="alert alert-success">{{ message }}</p> 
+                            {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action="/contact" method="POST">
+                    <div class="mb-3">
+                        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="message" class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-outline-gold">Send Message</button>
+                </form>
+            </div>
+
+
+            <!-- Contact Information -->
+            <div class="col-md-6 text-start">
+                <h4 class="text-gold">Our Contact Details</h4>
+                <p><strong>Address:</strong> 123 EasyWorld Street, Accra, Ghana</p>
+                <p><strong>Phone:</strong> +233 241355094</p>
+                <p><strong>Email:</strong> contact@easyworld.com</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 EasyWorld Co. Op. All rights reserved.</p>
+</footer>
+    <!-- Bootstrap JS -->
+<script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+<script>
+    const toggler = document.getElementById('navToggler');
+    toggler.addEventListener('click', function () {
+        this.classList.toggle('open');
+    });
+</script>
+</body>
+</html>
