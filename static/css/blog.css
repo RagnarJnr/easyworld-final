@@ -1,0 +1,145 @@
+/* General blog page theme */
+body {
+  background-color: #27592D;
+  /* Emerald green */
+  color: #ffd700;
+  text-align: center;
+  padding-top: 100px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Opening Soon message */
+.opening-soon {
+  font-size: 2.0rem;
+  margin-top: 50px;
+  font-weight: bold;
+}
+
+.opening-soon i {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  color: #ffd700;
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: #034d05;
+}
+
+.nav-link,
+.navbar-brand {
+  color: #ffd700 !important;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.custom-toggler {
+  border: none;
+  background: transparent;
+  width: 30px;
+  height: 30px;
+  position: relative;
+  z-index: 999;
+}
+
+.custom-toggler .toggler-icon {
+  display: block;
+  height: 3px;
+  width: 20px;
+  /* Adjust this for desired length */
+  background-color: #ffd700;
+  /* gold */
+  margin: 4px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.custom-toggler.open .top-bar {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.custom-toggler.open .middle-bar {
+  opacity: 0;
+}
+
+.custom-toggler.open .bottom-bar {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Blog placeholder card */
+.card.bg-dark {
+  background-color: #0f0f0f !important;
+  border-color: #ffd700 !important;
+}
+
+.card-title.text-warning {
+  color: #ffd700 !important;
+}
+
+/* Slide-in animation */
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-in {
+  animation: slideInUp 1s ease-out;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: #ffd700;
+  background-color: #034d05;
+  padding: 10px 0;
+}
+
+/* Responsive Design for Blog Page */
+@media (max-width: 768px) {
+  .opening-soon {
+    font-size: 1.8rem;
+    margin-top: 50px;
+  }
+
+  .opening-soon i {
+    font-size: 2.5rem;
+  }
+
+  .card.bg-dark {
+    margin: 20px;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .opening-soon {
+    margin-top: 50px;
+    font-size: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+}
