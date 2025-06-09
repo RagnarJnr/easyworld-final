@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overview - EasyWorld Co. Op</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+</head>
+<body class="bg-dark">
+  
+     <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="Index.html">
+          <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EasyWorld Co. Op Logo" width="40" height="40" class="me-2">
+          <span class="brand-name gradient-heading">EasyWorld Co. Op</span>
+        </a>
+        <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navToggler">
+          <span class="toggler-icon top-bar"></span>
+          <span class="toggler-icon middle-bar"></span>
+          <span class="toggler-icon bottom-bar"></span>
+        </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">
+              <i class="fas fa-home me-1"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('overview') }}">
+              <i class="fas fa-info-circle me-1"></i> Overview
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('ventures') }}">
+              <i class="fas fa-cogs me-1"></i> Ventures</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('index') }}#community">
+              <i class="fas fa-users me-1"></i> Community & Collaboration
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">
+              <i class="fas fa-envelope me-1"></i> Contact
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('blog') }}">
+              <i class="fas fa-blog me-1"></i> Blog
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="overview-hero">
+      <div>
+        <h1 class="fade-in">Overview of EasyWorld Co. Op</h1>
+        <p class="fade-in">Empowering communities through innovation, collaboration, and sustainability.</p>
+      </div>
+  </section>
+
+  <!-- Overview Content Section -->
+  <section class="overview-section content-box fade-in">
+    <div class="container">
+      
+      <div>
+        <h2><i class="fas fa-bullseye me-2 text-gold"></i>Our Mission</h2>
+          <p>
+            At EasyWorld Co. Op, our mission is to build a dynamic platform where ideas meet opportunity, 
+            uniting people with both technical and soft skills. We empower diverse talents to collaborate, 
+            innovate, and thrive—creating impact that lasts.
+          </p>
+      </div>
+
+      <div>
+        <h2>
+          <i class="fas fa-eye me-2 text-gold"></i>
+            <h2>Our Vision</h2>
+            <p>
+              Our vision is to become a leading force in community innovation—where individuals from all 
+              backgrounds unite their skills, uplift one another, and co-create solutions that shape a better, 
+              more empowered future.
+            </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Values Section with Slideshow -->
+  <section class="py-5 overview-section fade-in">
+    <div class="container text-center">
+      <h2 class="text-gold mb-4">Our Values</h2>
+
+      <div id="valuesCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+          <div class="carousel-item active">
+            <h5>Innovation</h5>
+            <p>Pushing boundaries for creative solutions.</p>
+            <img src="{{ url_for('static', filename='images/innovation.png') }}" class="d-block w-100" alt="Innovation">
+          </div>
+
+          <div class="carousel-item">
+            <h5>Sustainability</h5>
+            <p>Building a greener future.</p>
+            <img src="{{ url_for('static', filename='images/sustainability.png') }}" class="d-block w-100" alt="Sustainability">
+          </div>
+
+          <div class="carousel-item">
+            <h5>Collaboration</h5>
+            <p>Working together for success.</p>
+            <img src="{{ url_for('static', filename='images/collaboration.png') }}" class="d-block w-100" alt="Collaboration">
+          </div>
+
+          <div class="carousel-item">
+            <h5>Empowerment</h5>
+            <p>Uplifting individuals and communities.</p>
+            <img src="{{ url_for('static', filename='images/empowerment.jpeg') }}" class="d-block w-100" alt="Empowerment">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section id="contact" class="py-5">
+      <div class="container text-center">
+          <h2 class="gradient-text">Contact Us</h2>
+          <p>We'd love to hear from you. Reach out to us through any of the methods below.</p>
+          
+          <div class="row mt-4">
+              <!-- Contact Form -->
+              <div class="col-md-6 mb-4">
+                 {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                            {% for message in messages %}
+                               <p class="alert alert-success">{{ message }}</p> 
+                            {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action="/contact" method="POST">
+                    <div class="mb-3">
+                        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="message" class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-outline-gold">Send Message</button>
+                </form>
+            </div>
+
+              <!-- Contact Information -->
+              <div class="col-md-6 text-start">
+                  <h4 class="text-gold">Our Contact Details</h4>
+                  <p><strong>Address:</strong> 123 EasyWorld Street, Accra, Ghana</p>
+                  <p><strong>Phone:</strong> +233 241355094</p>
+                  <p><strong>Email:</strong> contact@easyworld.com</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+      <p>&copy; 2025 EasyWorld Co. Op. All rights reserved.</p>
+  </footer>
+
+      <!-- Bootstrap JS -->
+  <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+  <script>
+      const toggler = document.getElementById('navToggler');
+      toggler.addEventListener('click', function () {
+          this.classList.toggle('open');
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyWorld Co. Op - Ventures</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+</head>
+<body class="bg-dark text-light">
+    <!-- Navbar -->
+     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EasyWorld Co. Op Logo" width="40" height="40" class="me-2">
+                <span class="brand-name gradient-heading">EasyWorld Co. Op</span>
+            </a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navToggler">
+            <span class="toggler-icon top-bar"></span>
+            <span class="toggler-icon middle-bar"></span>
+            <span class="toggler-icon bottom-bar"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home me-1"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('overview') }}"><i class="fas fa-info-circle me-1"></i> Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('ventures') }}"><i class="fas fa-cogs me-1"></i> Ventures</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}#community"><i class="fas fa-users me-1"></i> Community & Collaboration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact"><i class="fas fa-envelope me-1"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('blog') }}"><i class="fas fa-blog me-1"></i> Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Ventures Section -->
+    <section id="ventures" class="py-5 text-center">
+        <section class="hero ventures-hero">
+            <div>
+                <h1 class="fade-in">Our Ventures</h1>
+                <p class="lead mt-3 fade-in">Explore the exciting ventures of EasyWorld Co. Op</p>
+                <a href="#ventures-details" class="btn btn-warning mt-4 fade-in">Learn More</a>
+            </div>
+        </section>
+    </section>
+
+<!-- Venture Details -->
+<section id="ventures-details" class="container py-5">
+    <p class="text-center">
+        Here we expand on the ventures we are pursuing. Each venture is part of our mission to bring innovation and sustainability to local communities.
+    </p>
+              <!-- Stylish Divider -->
+<div class="section-divider"></div>
+
+    <!-- Cassava Starch Factory -->
+    <div class="row align-items-center my-5" id="cassava_starch_factory">
+        <div class="col-md-6">
+            <h3>Cassava Starch Factory</h3>
+            <p>
+At EasyWorld Co. Op, our Cassava Starch Factory project aims to revolutionize local and international markets by producing premium, high-quality cassava starch.  
+We are committed to sustainable sourcing, modern processing techniques, and scalable production that meets industrial, food, and pharmaceutical demands.  
+
+By investing or collaborating with us, you join a movement to empower rural farmers, create jobs, and drive profitable growth in a rising global starch industry.  
+Together, we can transform raw potential into thriving economic value — responsibly and innovatively.
+</p>
+        </div>
+        <div class="col-md-6 text-center">
+            <img src="{{ url_for('static', filename='images/cassava_starch_factory-venture.png') }}" alt="Cassava Starch Factory" class="img-fluid rounded">
+        </div>
+    </div>
+
+    <!-- Goat Farming -->
+    <div class="row align-items-center my-5" id="diary_goat_farming">
+        <div class="col-md-6 order-md-2">
+            <h3>Dairy Goat Farming</h3>
+           <p>
+Our Dairy Goat Farming initiative is more than just livestock — it's a forward-thinking venture focused on producing high-quality, nutrient-rich goat milk using sustainable, ethical, and scalable practices.  
+
+At EasyWorld Co. Op, we combine traditional expertise with modern veterinary care and technology to ensure optimal animal welfare and premium dairy output.  
+
+This venture presents a unique opportunity for investors and partners who believe in health-focused agribusiness, rural economic growth, and building a resilient food system in Africa and beyond.
+</p>
+        </div>
+        <div class="col-md-6 order-md-1 text-center">
+            <img src="{{ url_for('static', filename='images/diary_goat_farming-venture.png') }}" alt="Goat Farming" class="img-fluid rounded">
+        </div>
+    </div>
+</section>
+ <!-- Contact Us Section -->
+<section id="contact" class="py-5">
+    <div class="container text-center">
+        <h2 class="gradient-text">Contact Us</h2>
+        <p>We'd love to hear from you. Reach out to us through any of the methods below.</p>
+        
+        <div class="row mt-4">
+            <!-- Contact Form -->
+            <div class="col-md-6 mb-4">
+                 {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                            {% for message in messages %}
+                               <p class="alert alert-success">{{ message }}</p> 
+                            {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action="/contact" method="POST">
+                    <div class="mb-3">
+                        <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="message" class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-outline-gold">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="col-md-6 text-start">
+                <h4 class="text-gold">Our Contact Details</h4>
+                <p><strong>Address:</strong> 123 EasyWorld Street, Accra, Ghana</p>
+                <p><strong>Phone:</strong> +233 241355094</p>
+                <p><strong>Email:</strong> contact@easyworld.com</p>                
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 EasyWorld Co. Op. All rights reserved.</p>
+    </footer>
+
+<script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+    const toggler = document.getElementById('navToggler');
+    toggler.addEventListener('click', function () {
+        this.classList.toggle('open');
+    });
+</script>
+</body>
+</html>

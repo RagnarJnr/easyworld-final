@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EasyWorld Co. Op - Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}" >
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="EasyWorld Co. Op Logo" width="40" height="40" class="me-2">
+                <span class="brand-name gradient-heading">EasyWorld Co. Op</span>
+            </a>
+            <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="navToggler">
+              <span class="toggler-icon top-bar"></span>
+              <span class="toggler-icon middle-bar"></span>
+              <span class="toggler-icon bottom-bar"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home me-1"></i> Home</a>
+                </li>
+              </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Opening Soon Message -->
+    <div class="opening-soon">
+      <i class="fas fa-tools"></i>
+      <p>Our Blog is <strong>Opening Soon</strong>. Stay tuned!</p>
+    </div>
+
+    <!-- Blog Placeholder Card -->
+    <div class="container mt-5">
+      <div class="card bg-dark text-light border-warning mx-auto slide-in">
+        <div class="card-body">
+        <h4 class="card-title text-warning"><i class="fas fa-pen-nib me-2"></i>Sample Blog Post Title</h4>
+          <p class="card-text">We're working on exciting content. This space will feature updates, stories, and ideas from EasyWorld Co. Op. Stay connected!</p>
+          <p class="text-muted mb-0"><small>Coming Soon...</small></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 EasyWorld Co. Op. All rights reserved.</p>
+  </footer>
+
+<script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+      <script>
+        const toggler = document.getElementById('navToggler');
+        toggler.addEventListener('click', function () {
+        this.classList.toggle('open');
+        });
+      </script>
+  </body>
+</html>
