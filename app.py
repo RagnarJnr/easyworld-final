@@ -53,7 +53,6 @@ def blog():
 @app.route('/dashboard')
 def dashboard():
     messages = ContactMessage.query.order_by(ContactMessage.id.desc()).all()
-    print(messages)
     return render_template('dashboard.html', messages=messages)
 
 if __name__ == '__main__':
