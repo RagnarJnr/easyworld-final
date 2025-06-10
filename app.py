@@ -55,5 +55,10 @@ def dashboard():
     messages = ContactMessage.query.order_by(ContactMessage.id.desc()).all()
     return render_template('dashboard.html', messages=messages)
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
+
 if __name__ == '__main__':
     app.run(debug=False)
