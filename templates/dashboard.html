@@ -20,18 +20,15 @@
                 </tr>
             </thead>
             <tbody>
-                {% for msg in messages %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ msg.name }}</td>
-                    <td>{{ msg.email }}</td>
-                    <td>{{ msg.message }}</td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="4" class="text-center">No messages found.</td>
-                </tr>
+                {% for message in messages %}
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ message.name }} ({{ message.email }})</h5>
+                        <p class="card-text">{{ message.message }}</p>
+                    </div>
+                  </div>
                 {% endfor %}
+
             </tbody>
         </table>
     </div>
