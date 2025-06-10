@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: #d4af37;
     margin-top: 60px;
 }
@@ -56,37 +56,6 @@ nav a:hover {
     transition: border-color 0.3s;
 }
 
-.custom-toggler {
-    border: none;
-    background: transparent;
-    width: 30px;
-    height: 30px;
-    position: relative;
-    z-index: 999;
-}
-
-.custom-toggler .toggler-icon {
-    display: block;
-    height: 3px;
-    width: 100%;
-    background-color: white;
-    margin: 5px 0;
-    transition: all 0.3s ease;
-    border-radius: 1px;
-}
-
-.custom-toggler.open .top-bar {
-    transform: rotate(45deg) translate(5px, 5px);
-}
-
-.custom-toggler.open .middle-bar {
-    opacity: 0;
-}
-
-.custom-toggler.open .bottom-bar {
-    transform: rotate(-45deg) translate(6px, -6px);
-}
-
 #menu-icon {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
@@ -133,6 +102,11 @@ nav a:hover {
 .navbar.fixed-top {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+}
+
+.alert {
+  color: black !important;
+  font-weight: 500;
 }
 
 /* Hero Section */
