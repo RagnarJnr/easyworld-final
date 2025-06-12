@@ -18,20 +18,23 @@ class ContactMessage(db.Model):
 # Route to handle contact form
 @app.route('/contact', methods=['POST'])
 def contact():
- try:
-    name = request.form['name']
-    email = request.form['email']
-    message = request.form['message']
+    try:
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
 
-    if name and email and message:
-        new_msg = ContactMessage(name=name, email=email, message=message)
-        db.session.add(new_msg)
-        db.session.commit()
-        flash("Message saved successfully. EasyWorld will get back to you soon.")
-    else:
-        flash("Please fill all fields before submitting.")
- except Exception as e:
+        if name and email and message:
+            new_msg = ContactMessage(name=name, email=email, message=message)
+            db.session.add(new_msg)
+            db.session.commit()
+            flash("Message saved successfully. EasyWorld will get back to you soon.")
+        else:
+            flash("Please fill all fields before submitting.")
+    except Exception as e:
+        flash("Something went wrong. Please try again.")
+
     return redirect(request.referrer or '/')
+
 
 # Pages
 @app.route('/')
