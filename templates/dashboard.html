@@ -32,6 +32,10 @@
             </tbody>
         </table>
     </div>
-    <p>Test: First message name is {{ messages[0].name }}</p>
+    {% if messages %}
+      <p>Test: First message name is {{ messages[0].name }}</p>
+    {% else %}
+      <p>No messages yet.</p>
+    {% endif %}
 </body>
 </html>
