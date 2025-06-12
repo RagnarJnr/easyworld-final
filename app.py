@@ -1,8 +1,10 @@
 from flask import Flask, request, redirect, flash, render_template
 from flask_sqlalchemy import SQLAlchemy
+import os
+
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Needed for flash messages
+app.secret_key = os.getenv("SECRET_KEY", "fallback_secret")
 
 # Database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
