@@ -456,11 +456,12 @@ p {
     padding-left: 20px;
 }
 
-/* Hide carousel control buttons */
+/* Hide carousel control buttons 
 #valuesCarousel .carousel-control-prev,
 #valuesCarousel .carousel-control-next {
     display: none;
 }
+*/
 
 /* Ensure images fit well on desktop */
 #valuesCarousel .carousel-item img {
@@ -481,6 +482,9 @@ p {
 }
 
 /* ventures styling */
+#ventures {
+    padding: 0px;
+}
 .ventures-hero {
     background-image: url('../images/ventures-image.png');
     background-size: cover;
