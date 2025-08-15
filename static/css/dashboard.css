@@ -1,0 +1,73 @@
+/* Dashboard Global Styles */
+body {
+  background-color: #121212;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  height: 100vh;
+  background-color: #1a1a1a;
+  padding-top: 20px;
+  position: fixed;
+  width: 220px;
+}
+
+.sidebar h3 {
+  color: #FFD700;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px 20px;
+  color: #ccc;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #333;
+  color: #FFD700;
+}
+
+/* Main Content Area */
+.content {
+  margin-left: 240px;
+  padding: 20px;
+}
+
+/* Gradient Text for Titles */
+.gradient-text {
+  background: linear-gradient(45deg, #FFD700, #ffae00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Card Styling */
+.card {
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+}
+
+.card-title {
+  color: #FFD700;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.empty-state img {
+  width: 150px;
+  opacity: 0.5;
+}
+
+.empty-state p {
+  margin-top: 15px;
+  color: #ccc;
+}
