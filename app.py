@@ -2,7 +2,6 @@ from flask import Flask, request, redirect, flash, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "fallback_secret")
 
@@ -26,7 +25,7 @@ class BlogPost(db.Model):
     author = db.Column(db.String(100), default="Admin")
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-# Route to handle contact form
+# -------------------- CONTACT --------------------
 @app.route('/contact', methods=['POST'])
 def contact():
     try:
@@ -46,7 +45,7 @@ def contact():
 
     return redirect(request.referrer or '/')
 
-# API: Get all blog posts
+# -------------------- BLOG API --------------------
 @app.route('/api/get_blogs', methods=['GET'])
 def get_blogs():
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
@@ -61,7 +60,6 @@ def get_blogs():
         } for p in posts
     ])
 
-# API: Add a new blog post (from dashboard form)
 @app.route('/api/add_blog', methods=['POST'])
 def add_blog():
     try:
@@ -80,8 +78,36 @@ def add_blog():
         return jsonify({"status": "success", "id": new_post.id})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-        
-# Pages
+
+# ✅ Edit a blog post
+@app.route('/api/edit_blog/<int:post_id>', methods=['PUT'])
+def edit_blog(post_id):
+    try:
+        data = request.get_json()
+        post = BlogPost.query.get_or_404(post_id)
+
+        post.title = data.get("title", post.title)
+        post.content = data.get("content", post.content)
+        post.image_url = data.get("image_url", post.image_url)
+        post.author = data.get("author", post.author)
+
+        db.session.commit()
+        return jsonify({"status": "success", "message": "Blog updated"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# ✅ Delete a blog post
+@app.route('/api/delete_blog/<int:post_id>', methods=['DELETE'])
+def delete_blog(post_id):
+    try:
+        post = BlogPost.query.get_or_404(post_id)
+        db.session.delete(post)
+        db.session.commit()
+        return jsonify({"status": "success", "message": "Blog deleted"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+# -------------------- PAGES --------------------
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -101,14 +127,14 @@ def blog():
 @app.route('/dashboard')
 def dashboard():
     messages = ContactMessage.query.order_by(ContactMessage.id.desc()).all()
-    return render_template('dashboard.html', messages=messages)
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()  # ✅ send posts to dashboard
+    return render_template('dashboard.html', messages=messages, posts=posts)
 
-# Safe way to create tables on first run
+# -------------------- DB INIT --------------------
 with app.app_context():
     db.create_all()
 
-
-
 if __name__ == '__main__':
     app.run(debug=False)
+
 
