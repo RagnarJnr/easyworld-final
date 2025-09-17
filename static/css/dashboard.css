@@ -102,3 +102,23 @@ body {
     margin-left: 0;
   }
 }
+/* Toggler button styling */
+#sidebarToggle {
+  background-color: #FFD700;   /* gold */
+  border: none;
+  color: #121212;              /* dark text */
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 6px 12px;
+}
+#sidebarToggle:hover {
+  background-color: #ffae00;   /* darker gold */
+  color: #fff;
+}
+
+/* Hide toggler on desktop */
+@media (min-width: 769px) {
+  #sidebarToggle {
+    display: none;
+  }
+}
