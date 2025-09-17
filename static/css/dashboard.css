@@ -74,9 +74,13 @@ body {
 .card {
   background-color: #1f1f1f;
   border: 1px solid #333;
+  color: #fff;   /* default text inside cards */
 }
 .card-title {
-  color: #FFD700;
+  color: #FFD700;   /* gold for titles */
+}
+.card-subtitle {
+  color: #aaa;      /* lighter gray for subtitles */
 }
 
 /* Empty State */
