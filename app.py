@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, flash, render_template
+from flask import Flask, request, redirect, flash, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -16,6 +16,15 @@ class ContactMessage(db.Model):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     message = db.Column(db.Text, nullable=False)
+
+# Blog post model
+class BlogPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.String(255), nullable=True)
+    author = db.Column(db.String(100), default="Admin")
+    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
 # Route to handle contact form
 @app.route('/contact', methods=['POST'])
@@ -37,7 +46,41 @@ def contact():
 
     return redirect(request.referrer or '/')
 
+# API: Get all blog posts
+@app.route('/api/get_blogs', methods=['GET'])
+def get_blogs():
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+    return jsonify([
+        {
+            "id": p.id,
+            "title": p.title,
+            "content": p.content,
+            "image_url": p.image_url,
+            "author": p.author,
+            "created_at": p.created_at.strftime("%Y-%m-%d %H:%M")
+        } for p in posts
+    ])
 
+# API: Add a new blog post (from dashboard form)
+@app.route('/api/add_blog', methods=['POST'])
+def add_blog():
+    try:
+        data = request.get_json()
+        if not data.get("title") or not data.get("content"):
+            return jsonify({"error": "Title and content are required"}), 400
+
+        new_post = BlogPost(
+            title=data["title"],
+            content=data["content"],
+            image_url=data.get("image_url"),
+            author=data.get("author", "Admin")
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        return jsonify({"status": "success", "id": new_post.id})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+        
 # Pages
 @app.route('/')
 def index():
@@ -68,3 +111,4 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
