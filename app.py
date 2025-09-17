@@ -127,7 +127,7 @@ def blog():
 @app.route('/dashboard')
 def dashboard():
     messages = ContactMessage.query.order_by(ContactMessage.id.desc()).all()
-    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()  # ✅ send posts to dashboard
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
     return render_template('dashboard.html', messages=messages, posts=posts)
 
 # -------------------- DB INIT --------------------
@@ -136,5 +136,6 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
