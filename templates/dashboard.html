@@ -58,11 +58,17 @@
 
 <!-- JS for Sidebar Toggle -->
 <script>
-  document.getElementById("sidebarToggle").onclick = function () {
-    document.getElementById("wrapper").classList.toggle("toggled");
-  };
+  // Auto-close sidebar when clicking a link (on mobile)
+  document.querySelectorAll("#sidebar-wrapper .list-group-item").forEach(link => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth < 769) {
+        document.getElementById("wrapper").classList.remove("toggled");
+      }
+    });
+  });
 </script>
 </body>
 </html>
+
 
 
