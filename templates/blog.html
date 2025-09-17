@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EasyWorld Co. Op - Blog</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ url_for('static', filename='fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
   </head>
@@ -22,7 +21,7 @@
           <span class="toggler-icon middle-bar"></span>
           <span class="toggler-icon bottom-bar"></span>
         </button>
-    
+
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
@@ -33,22 +32,26 @@
       </div>
     </nav>
 
-    <!-- Blog Container -->
-    <div class="container py-5 mt-5">
-      <h1 class="mb-4 gradient-heading text-center"><i class="fas fa-blog me-2"></i> EasyWorld Blog</h1>
-      <div id="blogList" class="row g-4 justify-content-center">
-        <!-- Blog posts will load here -->
+    <!-- Blog Section -->
+    <div class="container">
+      <div class="blog-header">
+        <h1><i class="fas fa-pen-nib me-2"></i> EasyWorld Blog</h1>
+        <p>Ideas, stories & updates from EasyWorld Co. Op</p>
+      </div>
+
+      <!-- Blog Grid -->
+      <div class="blog-container" id="blogPosts">
+        <!-- Blog posts will be injected here by JavaScript -->
       </div>
     </div>
 
     <!-- Footer -->
-    <footer class="mt-5 text-center text-light py-3 border-top border-warning">
+    <footer>
       <p>&copy; 2025 EasyWorld Co. Op. All rights reserved.</p>
     </footer>
 
     <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
     <script>
-      // Navbar toggle animation
       const toggler = document.getElementById('navToggler');
       if (toggler) {
         toggler.addEventListener('click', function () {
@@ -56,31 +59,25 @@
         });
       }
 
-      // Load blog posts dynamically
+      // Fetch blog posts from API
       async function loadBlogs() {
         try {
           const res = await fetch("/api/get_blogs");
-          const blogs = await res.json();
-          const blogList = document.getElementById("blogList");
+          const posts = await res.json();
+          const container = document.getElementById("blogPosts");
 
-          if (blogs.length === 0) {
-            blogList.innerHTML = `
-              <div class="col-12 text-center text-muted">
-                <i class="fas fa-tools fa-2x mb-3"></i>
-                <p>No blog posts yet. Stay tuned!</p>
-              </div>`;
+          if (posts.length === 0) {
+            container.innerHTML = `<p class="text-center text-muted">No blog posts yet. Check back soon!</p>`;
             return;
           }
 
-          blogList.innerHTML = blogs.map(b => `
-            <div class="col-md-8">
-              <div class="card bg-dark text-light border-warning shadow-sm slide-in">
-                ${b.image_url ? `<img src="${b.image_url}" class="card-img-top" alt="${b.title}">` : ""}
-                <div class="card-body">
-                  <h4 class="card-title text-warning"><i class="fas fa-pen-nib me-2"></i>${b.title}</h4>
-                  <p class="card-text">${b.content}</p>
-                  <p class="text-muted mb-0"><small>By ${b.author} on ${b.created_at}</small></p>
-                </div>
+          container.innerHTML = posts.map(p => `
+            <div class="blog-card">
+              ${p.image_url ? `<img src="${p.image_url}" alt="${p.title}">` : ""}
+              <div class="blog-card-body">
+                <h3 class="blog-card-title">${p.title}</h3>
+                <p class="blog-card-text">${p.content.substring(0, 150)}...</p>
+                <p class="blog-meta"><i class="fas fa-user"></i> ${p.author} • <i class="fas fa-clock"></i> ${p.created_at}</p>
               </div>
             </div>
           `).join("");
