@@ -62,6 +62,16 @@ body {
 .navbar h4 {
   color: #FFD700;
 }
+.navbar-toggler {
+  background-color: transparent !important;
+  border: none !important; /* optional: remove the border */
+}
+.navbar-toggler:focus,
+.navbar-toggler:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
 
 /* Gradient Text for Section Titles */
 .gradient-text {
