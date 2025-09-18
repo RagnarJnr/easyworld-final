@@ -3,6 +3,8 @@ body {
   background-color: #121212;
   color: #fff;
   font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 /* Sidebar Layout */
@@ -17,6 +19,10 @@ body {
   background-color: #1a1a1a;
   transition: margin 0.25s ease-out;
   height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* ensure it overlays properly */
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -26,6 +32,9 @@ body {
 /* Sidebar Heading */
 .sidebar-heading {
   color: #FFD700;
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 /* Sidebar Links */
@@ -34,7 +43,7 @@ body {
   padding: 12px 20px;
   color: #ccc;
   background-color: transparent;
-  transition: background 0.3s;
+  transition: background 0.3s, color 0.3s;
 }
 #sidebar-wrapper .list-group-item:hover {
   background-color: #333;
@@ -51,8 +60,14 @@ body {
 /* Main Content */
 #page-content-wrapper {
   flex: 1;
+  margin-left: 250px; /* space for sidebar */
   background-color: #121212;
-  padding-bottom: 40px;
+  padding: 20px;
+  transition: margin-left 0.25s ease-out;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  margin-left: 0; /* when sidebar hidden */
 }
 
 /* Navbar */
@@ -64,7 +79,7 @@ body {
 }
 .navbar-toggler {
   background-color: transparent !important;
-  border: none !important; /* optional: remove the border */
+  border: none !important;
 }
 .navbar-toggler:focus,
 .navbar-toggler:active {
@@ -84,13 +99,13 @@ body {
 .card {
   background-color: #1f1f1f;
   border: 1px solid #333;
-  color: #fff;   /* default text inside cards */
+  color: #fff;
 }
 .card-title {
-  color: #FFD700;   /* gold for titles */
+  color: #FFD700;
 }
 .card-subtitle {
-  color: #aaa;      /* lighter gray for subtitles */
+  color: #aaa;
 }
 
 /* Empty State */
@@ -107,7 +122,7 @@ body {
   color: #ccc;
 }
 
-/* Responsive Sidebar */
+/* Sidebar + Toggler Responsive */
 @media (max-width: 768px) {
   #sidebar-wrapper {
     margin-left: -250px;
@@ -115,18 +130,24 @@ body {
   #wrapper.toggled #sidebar-wrapper {
     margin-left: 0;
   }
+  #page-content-wrapper {
+    margin-left: 0; /* content fills screen when sidebar hidden */
+  }
 }
+
 /* Toggler button styling */
 #sidebarToggle {
-  background-color: #FFD700;   /* gold */
+  background-color: #FFD700;
   border: none;
-  color: #121212;              /* dark text */
+  color: #121212;
   font-size: 1.2rem;
   font-weight: bold;
   padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 #sidebarToggle:hover {
-  background-color: #ffae00;   /* darker gold */
+  background-color: #ffae00;
   color: #fff;
 }
 
