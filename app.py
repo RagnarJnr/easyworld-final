@@ -130,12 +130,19 @@ def dashboard():
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
     return render_template('dashboard.html', messages=messages, posts=posts)
 
+@app.route("/manage_blogs")
+def manage_blogs():
+    posts = Blog.query.order_by(Blog.created_at.desc()).all()
+    return render_template("manage_blogs.html", posts=posts)
+
+
 # -------------------- DB INIT --------------------
 with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Blogs - EasyWorld</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+<div id="wrapper">
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+    <div class="sidebar-heading text-center py-4 fw-bold">EasyWorld</div>
+    <div class="list-group list-group-flush">
+      <a href="{{ url_for('dashboard') }}" class="list-group-item">📊 Dashboard</a>
+      <a href="{{ url_for('manage_blogs') }}" class="list-group-item active">📝 Manage Blogs</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper" class="w-100">
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark border-bottom">
+      <div class="container-fluid">
+        <button class="btn" id="sidebarToggle">☰</button>
+        <h4 class="ms-3 mb-0">Manage Blogs</h4>
+      </div>
+    </nav>
+
+    <!-- Blog Management Section -->
+    <div class="container mt-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>All Blog Posts</h3>
+        <!-- Add Blog Button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">
+          ➕ Add New Blog
+        </button>
+      </div>
+
+      <!-- Blog Table -->
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for post in posts %}
+          <tr id="post-{{ post.id }}">
+            <td>{{ post.title }}</td>
+            <td>{{ post.author }}</td>
+            <td>{{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+              <!-- Edit -->
+              <button class="btn btn-warning btn-sm"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editModal{{ post.id }}">
+                Edit
+              </button>
+              <!-- Delete -->
+              <button class="btn btn-danger btn-sm" onclick="deleteBlog({{ post.id }})">
+                Delete
+              </button>
+            </td>
+          </tr>
+
+          <!-- Edit Modal -->
+          <div class="modal fade" id="editModal{{ post.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                  <h5 class="modal-title">Edit Blog Post</h5>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="editForm{{ post.id }}">
+                    <input type="text" class="form-control mb-2" name="title" value="{{ post.title }}">
+                    <textarea class="form-control mb-2" name="content">{{ post.content }}</textarea>
+                    <input type="text" class="form-control mb-2" name="image_url" value="{{ post.image_url }}">
+                    <input type="text" class="form-control mb-2" name="author" value="{{ post.author }}">
+                    <button type="button" class="btn btn-success" onclick="updateBlog({{ post.id }})">
+                      Save Changes
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add Blog Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content bg-dark text-light">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New Blog</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addForm">
+          <input type="text" class="form-control mb-2" name="title" placeholder="Blog Title">
+          <textarea class="form-control mb-2" name="content" placeholder="Blog Content"></textarea>
+          <input type="text" class="form-control mb-2" name="image_url" placeholder="Image URL">
+          <input type="text" class="form-control mb-2" name="author" placeholder="Author Name">
+          <button type="button" class="btn btn-success" onclick="addBlog()">
+            Add Blog
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Sidebar toggle
+  document.getElementById("sidebarToggle").addEventListener("click", function () {
+    document.getElementById("wrapper").classList.toggle("toggled");
+  });
+
+  // Add Blog
+  async function addBlog() {
+    const form = document.getElementById("addForm");
+    const data = {
+      title: form.title.value,
+      content: form.content.value,
+      image_url: form.image_url.value,
+      author: form.author.value,
+    };
+    const res = await fetch("/api/add_blog", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.status === "success") {
+      alert("Blog added!");
+      location.reload();
+    } else {
+      alert("Error: " + result.error);
+    }
+  }
+
+  // Update Blog
+  async function updateBlog(id) {
+    const form = document.getElementById(`editForm${id}`);
+    const data = {
+      title: form.title.value,
+      content: form.content.value,
+      image_url: form.image_url.value,
+      author: form.author.value,
+    };
+    const res = await fetch(`/api/edit_blog/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.status === "success") {
+      alert("Blog updated!");
+      location.reload();
+    } else {
+      alert("Error: " + result.error);
+    }
+  }
+
+  // Delete Blog
+  async function deleteBlog(id) {
+    if (!confirm("Are you sure you want to delete this post?")) return;
+    const res = await fetch(`/api/delete_blog/${id}`, { method: "DELETE" });
+    const result = await res.json();
+    if (result.status === "success") {
+      alert("Blog deleted!");
+      document.getElementById(`post-${id}`).remove();
+    } else {
+      alert("Error: " + result.error);
+    }
+  }
+</script>
+</body>
+</html>
