@@ -132,7 +132,7 @@ def dashboard():
 
 @app.route("/manage_blogs")
 def manage_blogs():
-    posts = Blog.query.order_by(Blog.created_at.desc()).all()
+    posts = Blog.query.all()   # no order_by yet
     return render_template("manage_blogs.html", posts=posts)
 
 
@@ -142,6 +142,7 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
