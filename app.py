@@ -9,6 +9,12 @@ app.secret_key = os.getenv("SECRET_KEY", "fallback_secret")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
 db = SQLAlchemy(app)
 
+# Image upload config
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 # Contact form model
 class ContactMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -142,6 +148,7 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
