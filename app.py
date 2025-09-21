@@ -21,7 +21,7 @@ class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    image_url = db.Column(db.String(255), nullable=True)
+    image_filename = db.Column(db.String(255), nullable=True)
     author = db.Column(db.String(100), default="Admin")
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
@@ -142,6 +142,7 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
