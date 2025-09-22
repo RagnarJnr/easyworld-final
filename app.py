@@ -98,17 +98,21 @@ def add_blog():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# ✅ Edit a blog post
-@app.route('/api/edit_blog/<int:post_id>', methods=['PUT'])
+@app.route("/api/edit_blog/<int:post_id>", methods=["POST"])
 def edit_blog(post_id):
     try:
-        data = request.get_json()
         post = BlogPost.query.get_or_404(post_id)
 
-        post.title = data.get("title", post.title)
-        post.content = data.get("content", post.content)
-        post.image_url = data.get("image_url", post.image_url)
-        post.author = data.get("author", post.author)
+        post.title = request.form.get("title", post.title)
+        post.content = request.form.get("content", post.content)
+        post.author = request.form.get("author", post.author)
+
+        image_file = request.files.get("image")
+        if image_file and image_file.filename != "":
+            image_filename = image_file.filename
+            image_path = os.path.join(app.config["UPLOAD_FOLDER"], image_filename)
+            image_file.save(image_path)
+            post.image_filename = image_filename
 
         db.session.commit()
         return jsonify({"status": "success", "message": "Blog updated"})
@@ -161,6 +165,7 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
