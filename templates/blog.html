@@ -45,11 +45,6 @@
       </div>
     </div>
 
-    {% if post.image_filename %}
-      <img src="{{ url_for('static', filename='uploads/' ~ post.image_filename) }}" 
-       alt="Blog Image" class="img-fluid mb-3">
-    {% endif %}
-
     <!-- Footer -->
     <footer>
       <p>&copy; 2025 EasyWorld Co. Op. All rights reserved.</p>
