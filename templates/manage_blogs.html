@@ -39,69 +39,82 @@
       </div>
 
       <!-- Blog Table -->
-      <table class="table table-dark table-striped">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Created At</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-         <tbody>
-          {% for post in posts %}
-          <tr>
-            <td>{{ post.id }}</td>
-            <td>
-              {% if post.image_filename %}
-                <img src="{{ url_for('static', filename='uploads/' ~ post.image_filename) }}" 
-                     alt="Blog Image" width="80" class="rounded">
-              {% else %}
-                <span class="text-muted">No Image</span>
-              {% endif %}
-            </td>
-            <td>{{ post.title }}</td>
-            <td>{{ post.author }}</td>
-            <td>{{ post.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
-              
-              <!-- Edit -->
-              <button class="btn btn-warning btn-sm"
-                      data-bs-toggle="modal"
-                      data-bs-target="#editModal{{ post.id }}">
-                Edit
-              </button>
-              <!-- Delete -->
-              <button class="btn btn-danger btn-sm" onclick="deleteBlog({{ post.id }})">
-                Delete
-              </button>
-            </td>
-          </tr>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Image</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Created At</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for post in posts %}
+    <tr id="post-{{ post.id }}">
+      <td>{{ post.id }}</td>
+      <td>
+        {% if post.image_filename %}
+          <img src="{{ url_for('static', filename='uploads/' ~ post.image_filename) }}" 
+               alt="Blog Image" width="80" class="rounded">
+        {% else %}
+          <span class="text-muted">No Image</span>
+        {% endif %}
+      </td>
+      <td>{{ post.title }}</td>
+      <td>{{ post.author }}</td>
+      <td>{{ post.created_at.strftime("%Y-%m-%d %H:%M") }}</td>
+      <td>
+        <!-- Edit -->
+        <button class="btn btn-warning btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#editModal{{ post.id }}">
+          Edit
+        </button>
+        <!-- Delete -->
+        <button class="btn btn-danger btn-sm" onclick="deleteBlog({{ post.id }})">
+          Delete
+        </button>
+      </td>
+    </tr>
 
-          <!-- Edit Modal -->
-          <div class="modal fade" id="editModal{{ post.id }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content bg-dark text-light">
-                <div class="modal-header">
-                  <h5 class="modal-title">Edit Blog Post</h5>
-                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                  <form id="addBlogForm" method="POST" action="/api/add_blog" enctype="multipart/form-data">
-                   <input type="text" name="title" class="form-control mb-2" placeholder="Blog title" required>
-                   <textarea name="content" class="form-control mb-2" placeholder="Content" required></textarea>
-
-                   <!-- Upload image -->
-                   <input type="file" name="image" class="form-control mb-2">
-                   <input type="text" name="author" class="form-control mb-2" placeholder="Author">
-                   <button type="submit" class="btn btn-success">Add Blog</button>
-                  </form>
-                </div>
-              </div>
-            </div>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal{{ post.id }}" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content bg-dark text-light">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Blog Post</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
           </div>
-          {% endfor %}
-        </tbody>
-      </table>
+          <div class="modal-body">
+            <form id="editForm{{ post.id }}" enctype="multipart/form-data">
+              <input type="text" name="title" class="form-control mb-2" 
+                     value="{{ post.title }}" required>
+              <textarea name="content" class="form-control mb-2" required>{{ post.content }}</textarea>
+              
+              <!-- Show current image -->
+              {% if post.image_filename %}
+                <p>Current Image:</p>
+                <img src="{{ url_for('static', filename='uploads/' ~ post.image_filename) }}" 
+                     alt="Blog Image" width="120" class="mb-2 rounded">
+              {% endif %}
+              
+              <!-- Upload new image -->
+              <input type="file" name="image" class="form-control mb-2">
+              
+              <input type="text" name="author" class="form-control mb-2" value="{{ post.author }}">
+              <button type="button" class="btn btn-success" onclick="updateBlog({{ post.id }})">
+                Save Changes
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </tbody>
+</table>
     </div>
   </div>
 </div>
