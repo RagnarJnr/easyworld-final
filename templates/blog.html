@@ -45,6 +45,10 @@
       </div>
     </div>
 
+    {% if post.image_url %}
+      <img src="{{ post.image_url }}" alt="Blog Image" class="img-fluid mb-3">
+    {% endif %}
+
     <!-- Footer -->
     <footer>
       <p>&copy; 2025 EasyWorld Co. Op. All rights reserved.</p>
