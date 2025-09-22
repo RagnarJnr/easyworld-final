@@ -77,14 +77,14 @@
                   <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                  <form id="editForm{{ post.id }}">
-                    <input type="text" class="form-control mb-2" name="title" value="{{ post.title }}">
-                    <textarea class="form-control mb-2" name="content">{{ post.content }}</textarea>
-                    <input type="text" class="form-control mb-2" name="image_url" value="{{ post.image_url }}">
-                    <input type="text" class="form-control mb-2" name="author" value="{{ post.author }}">
-                    <button type="button" class="btn btn-success" onclick="updateBlog({{ post.id }})">
-                      Save Changes
-                    </button>
+                  <form id="addBlogForm" method="POST" action="/api/add_blog" enctype="multipart/form-data">
+                   <input type="text" name="title" class="form-control mb-2" placeholder="Blog title" required>
+                   <textarea name="content" class="form-control mb-2" placeholder="Content" required></textarea>
+
+                   <!-- Upload image -->
+                   <input type="file" name="image" class="form-control mb-2">
+                   <input type="text" name="author" class="form-control mb-2" placeholder="Author">
+                   <button type="submit" class="btn btn-success">Add Blog</button>
                   </form>
                 </div>
               </div>
