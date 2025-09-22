@@ -9,12 +9,6 @@ app.secret_key = os.getenv("SECRET_KEY", "fallback_secret")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
 db = SQLAlchemy(app)
 
-# Image upload config
-UPLOAD_FOLDER = os.path.join('static', 'uploads')
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
 # Contact form model
 class ContactMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -27,7 +21,7 @@ class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    image_filename = db.Column(db.String(255), nullable=True)
+    image_url = db.Column(db.String(255), nullable=True)
     author = db.Column(db.String(100), default="Admin")
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
@@ -69,50 +63,33 @@ def get_blogs():
 @app.route('/api/add_blog', methods=['POST'])
 def add_blog():
     try:
-        title = request.form.get("title")
-        content = request.form.get("content")
-        author = request.form.get("author", "Admin")
-
-        if not title or not content:
+        data = request.get_json()
+        if not data.get("title") or not data.get("content"):
             return jsonify({"error": "Title and content are required"}), 400
 
-        # Save uploaded image if present
-        image_file = request.files.get("image")
-        image_filename = None
-        if image_file:
-            image_filename = image_file.filename
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
-            image_file.save(image_path)
-
         new_post = BlogPost(
-            title=title,
-            content=content,
-            author=author,
-            image_url=f"/static/uploads/{image_filename}" if image_filename else None,
-            image_filename=image_filename
+            title=data["title"],
+            content=data["content"],
+            image_url=data.get("image_url"),
+            author=data.get("author", "Admin")
         )
         db.session.add(new_post)
         db.session.commit()
-
         return jsonify({"status": "success", "id": new_post.id})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route("/api/edit_blog/<int:post_id>", methods=["POST"])
+# ✅ Edit a blog post
+@app.route('/api/edit_blog/<int:post_id>', methods=['PUT'])
 def edit_blog(post_id):
     try:
+        data = request.get_json()
         post = BlogPost.query.get_or_404(post_id)
 
-        post.title = request.form.get("title", post.title)
-        post.content = request.form.get("content", post.content)
-        post.author = request.form.get("author", post.author)
-
-        image_file = request.files.get("image")
-        if image_file and image_file.filename != "":
-            image_filename = image_file.filename
-            image_path = os.path.join(app.config["UPLOAD_FOLDER"], image_filename)
-            image_file.save(image_path)
-            post.image_filename = image_filename
+        post.title = data.get("title", post.title)
+        post.content = data.get("content", post.content)
+        post.image_url = data.get("image_url", post.image_url)
+        post.author = data.get("author", post.author)
 
         db.session.commit()
         return jsonify({"status": "success", "message": "Blog updated"})
@@ -165,13 +142,3 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
-
-
-
-
-
-
-
-
-
-
