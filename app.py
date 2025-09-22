@@ -69,18 +69,31 @@ def get_blogs():
 @app.route('/api/add_blog', methods=['POST'])
 def add_blog():
     try:
-        data = request.get_json()
-        if not data.get("title") or not data.get("content"):
+        title = request.form.get("title")
+        content = request.form.get("content")
+        author = request.form.get("author", "Admin")
+
+        if not title or not content:
             return jsonify({"error": "Title and content are required"}), 400
 
+        # Save uploaded image if present
+        image_file = request.files.get("image")
+        image_filename = None
+        if image_file:
+            image_filename = image_file.filename
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+            image_file.save(image_path)
+
         new_post = BlogPost(
-            title=data["title"],
-            content=data["content"],
-            image_url=data.get("image_url"),
-            author=data.get("author", "Admin")
+            title=title,
+            content=content,
+            author=author,
+            image_url=f"/static/uploads/{image_filename}" if image_filename else None,
+            image_filename=image_filename
         )
         db.session.add(new_post)
         db.session.commit()
+
         return jsonify({"status": "success", "id": new_post.id})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
@@ -148,6 +161,7 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
