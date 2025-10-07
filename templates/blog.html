@@ -66,14 +66,13 @@
       <p>&copy; 2025 EasyWorld Co. Op. All rights reserved.</p>
     </footer>
 
-    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Bootstrap 5 Bundle with Popper.js (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script>
-      const toggler = document.getElementById('navToggler');
-      if (toggler) {
-        toggler.addEventListener('click', function () {
-          this.classList.toggle('open');
-        });
-      }
+    const toggler = document.getElementById('navToggler');
+    toggler.addEventListener('click', function () {
+        this.classList.toggle('open');
+     });
 
       // Fetch blog posts from API
       async function loadBlogs() {
