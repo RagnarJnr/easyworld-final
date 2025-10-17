@@ -69,7 +69,7 @@ body {
   width: 100%;
   height: auto;
   max-height: 350px;
-  object-fit: fit;
+  object-fit: cover;
   display: block;
   margin: 0 auto;
   background-color: #000; /* fallback for transparent images */
