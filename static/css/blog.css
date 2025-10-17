@@ -68,8 +68,8 @@ body {
 .blog-card img {
   width: 100%;
   height: auto;
-  max-height: 350px;
-  object-fit: cover;
+  max-height: none;
+  object-fit: contain;
   display: block;
   margin: 0 auto;
   background-color: #000; /* fallback for transparent images */
@@ -151,6 +151,12 @@ footer {
 }
 
 /* Responsive Design for Blog Page */
+@media (min-width: 1024px) {
+  .blog-card img {
+    max-height: 500px;
+  }
+}
+
 @media (max-width: 768px) {
   .opening-soon {
     font-size: 1.8rem;
