@@ -105,6 +105,20 @@
       }
 
       loadBlogs();
+
+       // ⚙️ Smart image-fit function
+          function applySmartImageFit() {
+            const images = document.querySelectorAll(".blog-card img");
+            images.forEach(img => {
+              img.addEventListener("load", () => {
+                if (img.naturalHeight > img.naturalWidth) {
+                img.style.objectFit = "contain";
+                img.style.maxHeight = "400px";} 
+                else {
+                img.style.objectFit = "cover";}
+              });
+            });
+          }
     </script>
   </body>
 </html>
