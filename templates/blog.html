@@ -88,19 +88,27 @@
             container.innerHTML = `<p class="text-center text-muted">No blog posts yet. Check back soon!</p>`;
             return;
           }
+                  
+     container.innerHTML = posts.map(p => `
+       <div class="blog-card" id="blog-${p.id}">
+         ${p.image_url ? `<img src="${p.image_url}" alt="${p.title}">` : ""}
+         <div class="blog-card-body position-relative">
+          <h3 class="blog-card-title">${p.title}</h3>
+            <p class="blog-card-text">${p.content.substring(0, 150)}...</p>
+            <p class="blog-meta">
+              <i class="fas fa-user"></i> ${p.author} • 
+              <i class="fas fa-clock"></i> ${p.created_at}
+            </p>
 
-          container.innerHTML = posts.map(p => `
-            <div class="blog-card" id="blog-${p.id}">
-               ${p.image_url ? `<img src="${p.image_url}" alt="${p.title}">` : ""}
-              <div class="blog-card-body">
-               <h3 class="blog-card-title">${p.title}</h3>
-                <p class="blog-card-text">${p.content.substring(0, 150)}...</p>
-                <p class="blog-meta">
-                 <i class="fas fa-user"></i> ${p.author} • 
-                 <i class="fas fa-clock"></i> ${p.created_at}
-               </p>
-              </div>
-            </div>`).join("");
+      <div class="share-section position-relative">
+        <button class="share-btn" onclick="shareBlog('${p.id}', this)">
+          <i class="fas fa-share-alt"></i> Share
+        </button>
+        <span class="tooltip">Copied!</span>
+      </div>
+    </div>
+  </div>
+  `).join("");
 
       loadBlogs();
 
@@ -128,6 +136,19 @@
                 }
               }
             });
+          // Share / Copy Function
+        function shareBlog(id, btn) {
+          const url = `${window.location.origin}/blog#blog-${id}`;
+          const tooltip = btn.nextElementSibling;
+
+        if (navigator.share) {
+          navigator.share({ title: "EasyWorld Blog", text: "Check this out!", url });
+        } else {
+          navigator.clipboard.writeText(url).then(() => {
+            tooltip.classList.add("show-tooltip");
+            setTimeout(() => tooltip.classList.remove("show-tooltip"), 1500);
+          });
+        }
     </script>
   </body>
 </html>
