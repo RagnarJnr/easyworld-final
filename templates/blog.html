@@ -90,19 +90,17 @@
           }
 
           container.innerHTML = posts.map(p => `
-            <div class="blog-card">
-              ${p.image_url ? `<img src="${p.image_url}" alt="${p.title}">` : ""}
+            <div class="blog-card" id="blog-${p.id}">
+               ${p.image_url ? `<img src="${p.image_url}" alt="${p.title}">` : ""}
               <div class="blog-card-body">
-                <h3 class="blog-card-title">${p.title}</h3>
+               <h3 class="blog-card-title">${p.title}</h3>
                 <p class="blog-card-text">${p.content.substring(0, 150)}...</p>
-                <p class="blog-meta"><i class="fas fa-user"></i> ${p.author} • <i class="fas fa-clock"></i> ${p.created_at}</p>
+                <p class="blog-meta">
+                 <i class="fas fa-user"></i> ${p.author} • 
+                 <i class="fas fa-clock"></i> ${p.created_at}
+               </p>
               </div>
-            </div>
-          `).join("");
-        } catch (err) {
-          console.error("Error loading blogs:", err);
-        }
-      }
+            </div>`).join("");
 
       loadBlogs();
 
@@ -119,6 +117,17 @@
               });
             });
           }
+
+          // Auto-scroll to a blog if URL has a hash (e.g. #blog-3)
+            window.addEventListener("load", () => {
+              const hash = window.location.hash;
+              if (hash) {
+              const el = document.querySelector(hash);
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }
+            });
     </script>
   </body>
 </html>
