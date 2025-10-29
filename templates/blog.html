@@ -112,8 +112,25 @@ container.innerHTML = posts.map(p => `
           console.error("Error loading blogs:", err);
         }
       }
-
       loadBlogs();
+
+function shareBlog(blogId, btn) {
+  const url = `${window.location.origin}/blog#blog-${blogId}`;
+  const tooltip = btn.nextElementSibling;
+
+  if (navigator.share) {
+    navigator.share({
+      title: "EasyWorld Blog",
+      text: "Check out this post on EasyWorld Co. Op ✨",
+      url: url
+    }).catch(err => console.log("Share canceled", err));
+  } else {
+    navigator.clipboard.writeText(url).then(() => {
+      tooltip.classList.add("show-tooltip");
+      setTimeout(() => tooltip.classList.remove("show-tooltip"), 2000);
+    }).catch(err => console.error("Clipboard failed:", err));
+  }
+}
     </script>
   </body>
 </html>
