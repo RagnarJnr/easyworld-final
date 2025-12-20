@@ -13,6 +13,14 @@ app.secret_key = os.getenv("SECRET_KEY", "fallback_secret")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
 db = SQLAlchemy(app)
 
+def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if "user_id" not in session:
+            return jsonify({"error": "Unauthorized"}), 401
+        return f(*args, **kwargs)
+    return decorated
+
 # Contact form model
 class ContactMessage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,14 +47,7 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)   
-
-    def login_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if "user_id" not in session:
-            return jsonify({"error": "Unauthorized"}), 401
-        return f(*args, **kwargs)
-    return decorated
+    
 # -------------------- CONTACT --------------------
 @app.route('/contact', methods=['POST'])
 def contact():
@@ -193,6 +194,7 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
