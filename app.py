@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, flash, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask import session, url_for
 import os
 
 app = Flask(__name__)
@@ -26,6 +27,16 @@ class BlogPost(db.Model):
     author = db.Column(db.String(100), default="Admin")
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
+# User login 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password_hash = db.Column(db.String(255), nullable=False)
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)    
 # -------------------- CONTACT --------------------
 @app.route('/contact', methods=['POST'])
 def contact():
@@ -127,20 +138,45 @@ def blog():
 
 @app.route('/dashboard')
 def dashboard():
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
     messages = ContactMessage.query.order_by(ContactMessage.id.desc()).all()
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
     return render_template('dashboard.html', messages=messages, posts=posts)
-
 @app.route("/manage_blogs")
 def manage_blogs():
+    if "user_id" not in session:
+        return redirect(url_for("login"))
+
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
     return render_template("manage_blogs.html", posts=posts)
 
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
 
+        user = User.query.filter_by(username=username).first()
+
+        if user and user.check_password(password):
+            session["user_id"] = user.id
+            return redirect(url_for("dashboard"))
+
+        flash("Invalid credentials")
+
+    return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
 # -------------------- DB INIT --------------------
 with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
