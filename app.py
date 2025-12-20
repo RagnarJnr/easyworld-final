@@ -2,6 +2,8 @@ from flask import Flask, request, redirect, flash, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import session, url_for
+from flask import abort
+from functools import wraps
 import os
 
 app = Flask(__name__)
@@ -36,7 +38,15 @@ class User(db.Model):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)    
+        return check_password_hash(self.password_hash, password)   
+
+    def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if "user_id" not in session:
+            return jsonify({"error": "Unauthorized"}), 401
+        return f(*args, **kwargs)
+    return decorated
 # -------------------- CONTACT --------------------
 @app.route('/contact', methods=['POST'])
 def contact():
@@ -73,6 +83,7 @@ def get_blogs():
     ])
 
 @app.route('/api/add_blog', methods=['POST'])
+@login_required_api
 def add_blog():
     try:
         data = request.get_json()
@@ -89,10 +100,12 @@ def add_blog():
         db.session.commit()
         return jsonify({"status": "success", "id": new_post.id})
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        app.logger.error(e)
+        return jsonify({"error": "Internal server error"}), 500
 
 # ✅ Edit a blog post
 @app.route('/api/edit_blog/<int:post_id>', methods=['PUT'])
+@login_required_api
 def edit_blog(post_id):
     try:
         data = request.get_json()
@@ -101,23 +114,25 @@ def edit_blog(post_id):
         post.title = data.get("title", post.title)
         post.content = data.get("content", post.content)
         post.image_url = data.get("image_url", post.image_url)
-        post.author = data.get("author", post.author)
 
         db.session.commit()
-        return jsonify({"status": "success", "message": "Blog updated"})
+        return jsonify({"status": "success"})
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        app.logger.error(e)
+        return jsonify({"error": "Internal server error"}), 500
 
 # ✅ Delete a blog post
 @app.route('/api/delete_blog/<int:post_id>', methods=['DELETE'])
+@login_required_api
 def delete_blog(post_id):
     try:
         post = BlogPost.query.get_or_404(post_id)
         db.session.delete(post)
         db.session.commit()
-        return jsonify({"status": "success", "message": "Blog deleted"})
+        return jsonify({"status": "success"})
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        app.logger.error(e)
+        return jsonify({"error": "Internal server error"}), 500
 
 # -------------------- PAGES --------------------
 @app.route('/')
@@ -178,5 +193,6 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
