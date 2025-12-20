@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, flash, render_template, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 app = Flask(__name__)
@@ -142,3 +143,4 @@ with app.app_context():
 
 if __name__ == '__main__':
     app.run(debug=False)
+
